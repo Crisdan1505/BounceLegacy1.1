@@ -10,17 +10,36 @@
 
 ## Contexto
 
-Estoy construyendo Bounce Legacy, un videojuego de plataformas 2D inspirado en juegos retro, donde el jugador controla a un personaje tipo esfera que puede moverse, saltar, recolectar Legacy Crystals, enfrentarse a enemigos y avanzar por niveles.
+Estoy construyendo Bounce Legacy, un videojuego de plataformas 2D inspirado en juegos retro, donde el jugador controla a un personaje tipo esfera que puede moverse, saltar, recolectar Legacy Crystals, enfrentarse a enemigos, avanzar por niveles con puntos de guardado y de RESPOWN.
+
+El proyecto está dirigido al público gamer casual y a personas que disfrutan los videojuegos de plataformas con físicas simples, exploración y mecánicas progresivas o del un videojuego sencillo pero entretenido como los clasicos un emeplo Metal Slug un juego plataformero sencillo pero entretenido.
+
+El problema que busca resolver es ofrecer una experiencia de juego sencilla, entretenida y nostálgica, evitando que el proyecto se vuelva difícil de mantener conforme se agreguen nuevas mecánicas como enemigos, cristales, respawn, UI, transformaciones y guardado.
+
+Las condiciones que influyeron en esta decisión fue el querer crear algo a la vieja escuela de sencillo pero entretenido tomando en cuenta la nostalgia de los juego anteriores sin la necesidad de ser tan complejos para ser entretenidos, el uso de tecnologías relacionadas con C#, La compatibilidad entre Visual Community y Unity, y la importancia de mantener el código organizado desde el inicio para este poder ir creciendo manteniendo un facil mantenimiento.
 ---
 
 ## Decisión
 
-¿Qué decidiste? Sé específico: nombra la tecnología, el patrón o el estilo arquitectónico que elegiste.
+Se decidió utilizar Unity como motor de desarrollo gracias a que es mas intuitivo,ademas de este permitir conectar mi proyecto con Visual Studio Community, C# como lenguaje de programación y una arquitectura modular basada en componentes.
 
+El sistema se organizará en módulos separados, por ejemplo:
+
+* Player System
+* Enemy System
+* Camera System
+* Collectibles System
+* UI System
+* Respawn System
+* Save System
+
+Cada script tendrá una responsabilidad específica dentro del videojuego evitando la creación de clases dios.
 ### ¿Por qué?
+Se eligió Unity porque facilita el desarrollo de videojuegos 2D mediante herramientas integradas para físicas, colisiones, escenas, objetos, cámaras y UI.
 
-Argumenta tu decisión. No basta con decir "es lo que vimos en clase" — explica qué característica concreta de lo que elegiste resuelve tu problema.
+La arquitectura modular basada en componentes permite separar responsabilidades. Por ejemplo, el movimiento del jugador se maneja en PlayerController, la cámara en CameraFollow, los enemigos en EnemyPatrol, los cristales en LegacyCrystal y el contador en GameManager.
 
+Esto resuelve el problema de tener todo el código mezclado en un solo archivo. Además, facilita agregar nuevas funciones sin afectar directamente otros sistemas del juego.
 ### Alternativas consideradas
 
 *(Mínimo 3 filas)*
