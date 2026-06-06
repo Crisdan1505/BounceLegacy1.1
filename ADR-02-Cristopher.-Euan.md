@@ -10,45 +10,65 @@
 
 ## Contexto
 
-Estoy construyendo Bounce Legacy, un videojuego de plataformas 2D inspirado en juegos retro, donde el jugador controla a un personaje tipo esfera que puede moverse, saltar, recolectar Legacy Crystals, enfrentarse a enemigos y avanzar por niveles.
+A medida que Bounce Legacy crece en funcionalidades, es necesario representar la arquitectura desde diferentes perspectivas para comprender mejor la estructura interna del sistema, la interacción entre componentes, la ejecución de procesos y el entorno donde será desplegado.
+
+El proyecto incorpora múltiples módulos como movimiento del jugador, enemigos, sistema de coleccionables, interfaz gráfica y futuros mecanismos de guardado mediante archivos JSON.
+
 ---
 
 ## Decisión
 
-¿Qué decidiste? Sé específico: nombra la tecnología, el patrón o el estilo arquitectónico que elegiste.
+Se decidió utilizar las siguientes vistas arquitectónicas:
+
+Vista lógica
+Vista física
+Vista de despliegue
+Vista de procesos
+
+Estas vistas permiten documentar de manera clara la organización del sistema y facilitan futuras ampliaciones.
 
 ### ¿Por qué?
 
-Argumenta tu decisión. No basta con decir "es lo que vimos en clase" — explica qué característica concreta de lo que elegiste resuelve tu problema.
+Cada vista permite observar una parte diferente del sistema:
 
-### Alternativas consideradas
+La vista lógica muestra la organización funcional.
+La vista física muestra la estructura de archivos y componentes.
+La vista de despliegue representa dónde se ejecuta el sistema.
+La vista de procesos describe la interacción entre módulos durante la ejecución.
 
-*(Mínimo 3 filas)*
-
-| Alternativa | Por qué la descarté |
-|-------------|---------------------|
-| ...         | ...                 |
-| ...         | ...                 |
-| ...         | ...                 |
-
----
+Esto facilita la comprensión, mantenimiento y evolución del proyecto.
 
 ## Consecuencias
 
 **✅ Lo que gano:**
 
-Menciona al menos:
-- Una consecuencia **técnica** — qué se vuelve más fácil de construir, mantener o escalar en tu sistema
-- Una consecuencia sobre el **proceso o el equipo** — cómo afecta la forma en que vas a trabajar
+* Mejor documentación del sistema.
+* Mayor facilidad para explicar la arquitectura.
+* Identificación más clara de responsabilidades.
 
 **⚠️ Lo que sacrifico o asumo:**
 
 Menciona al menos:
-- Una **limitación técnica** — qué no podrás hacer fácilmente con esta decisión
-- Una **deuda o riesgo** — qué podrías tener que resolver más adelante si el proyecto crece
+* Mayor esfuerzo de documentación.
+* Los diagramas deberán mantenerse actualizados conforme crezca el proyecto.
 
 ## Diagrama
+-Primer Diagrama.
+<img width="514" height="705" alt="image" src="https://github.com/user-attachments/assets/4c8c1cde-319a-48c9-8bb7-eb2ca023d6b4" />
 
-Un boceto de cómo se estructura tu sistema (draw.io, Mermaid o a mano escaneado)
+-Vista Logica.
+<img width="544" height="504" alt="image" src="https://github.com/user-attachments/assets/8514b30b-4fe7-41f7-870f-6cf296e32ec7" />
 
-![Diagrama del sistema]( ./ruta/diagrama-nivel-1.png )
+-Vista física
+<img width="413" height="735" alt="image" src="https://github.com/user-attachments/assets/3fdf2966-6ce3-49c2-88f4-0775192894cb" />
+
+-Vista de despliegue
+<img width="335" height="454" alt="image" src="https://github.com/user-attachments/assets/18712871-e427-4054-afff-b62afc876acb" />
+
+-Vista de procesos
+<img width="312" height="724" alt="image" src="https://github.com/user-attachments/assets/d5e6eaac-6af8-4f44-bd28-88f78bba9b65" />
+
+
+
+
+
