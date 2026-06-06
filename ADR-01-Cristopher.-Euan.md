@@ -71,6 +71,5 @@ Deuda o riesgo:
 Algunas soluciones iniciales pueden necesitar refactorización más adelante. Por ejemplo, la detección de suelo, el sistema de daño o el guardado podrían necesitar mejoras si el juego crece con más niveles, enemigos y transformaciones.
 ## Diagrama
 
-Un boceto de cómo se estructura tu sistema (draw.io, Mermaid o a mano escaneado)
+<img width="518" height="723" alt="image" src="https://github.com/user-attachments/assets/178b30ff-59da-47e0-8776-bd20f3218c3b" />
 
-![Diagrama del sistema]( ./ruta/diagrama-nivel-1.png )
