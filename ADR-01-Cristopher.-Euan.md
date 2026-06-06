@@ -1,4 +1,4 @@
-# ADR-01: [Título corto de la decisión]
+# ADR-01: [Uso de Unity y arquitectura modular basada en componentes.]
 
 | Campo  | Valor |
 |--------|-------|
@@ -42,7 +42,6 @@ La arquitectura modular basada en componentes permite separar responsabilidades.
 Esto resuelve el problema de tener todo el código mezclado en un solo archivo. Además, facilita agregar nuevas funciones sin afectar directamente otros sistemas del juego.
 ### Alternativas consideradas
 
-*(Mínimo 3 filas)*
 
 | Alternativa | Por qué la descarté |
 |-------------|---------------------|
@@ -57,16 +56,19 @@ Esto resuelve el problema de tener todo el código mezclado en un solo archivo. 
 
 **✅ Lo que gano:**
 
-Menciona al menos:
-- Una consecuencia **técnica** — qué se vuelve más fácil de construir, mantener o escalar en tu sistema
-- Una consecuencia sobre el **proceso o el equipo** — cómo afecta la forma en que vas a trabajar
+*Consecuencia técnica:*
+El sistema se vuelve más fácil de mantener y escalar, ya que cada parte del videojuego está separada por responsabilidad. Esto permite modificar el sistema de enemigos, cristales, UI o jugador sin alterar todo el proyecto facilitando el realizar modificaciones o agregar mas cosas en el futuro.
+
+*Consecuencia sobre el proceso:*
+La organización por carpetas y scripts facilita trabajar de forma ordenada, documentar avances, subir cambios a GitHub y explicar mejor la arquitectura durante la defensa del proyecto.
 
 **⚠️ Lo que sacrifico o asumo:**
 
-Menciona al menos:
-- Una **limitación técnica** — qué no podrás hacer fácilmente con esta decisión
-- Una **deuda o riesgo** — qué podrías tener que resolver más adelante si el proyecto crece
+Limitación técnica:
+Al usar varios componentes y scripts, el proyecto requiere mayor organización. Si no se nombran bien los archivos o no se documenta, puede volverse confuso.
 
+Deuda o riesgo:
+Algunas soluciones iniciales pueden necesitar refactorización más adelante. Por ejemplo, la detección de suelo, el sistema de daño o el guardado podrían necesitar mejoras si el juego crece con más niveles, enemigos y transformaciones.
 ## Diagrama
 
 Un boceto de cómo se estructura tu sistema (draw.io, Mermaid o a mano escaneado)
