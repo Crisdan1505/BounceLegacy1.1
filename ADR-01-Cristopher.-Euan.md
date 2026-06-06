@@ -46,9 +46,10 @@ Esto resuelve el problema de tener todo el código mezclado en un solo archivo. 
 
 | Alternativa | Por qué la descarté |
 |-------------|---------------------|
-| ...         | ...                 |
-| ...         | ...                 |
-| ...         | ...                 |
+|Godot Engine        | Aunque es ligero y bueno para 2D, se descartó porque el proyecto ya trabaja mejor con C# y Unity ofrece mayor cantidad de recursos, documentación y soporte para principiantes.                |
+| Unreal Engine        | Se descartó porque está más enfocado en proyectos 3D de alta calidad gráfica y sería demasiado pesado para un videojuego 2D sencillo.                |
+| Crear el juego solo con C# sin motor gráfico        | Se descartó porque implicaría programar manualmente físicas, colisiones, renderizado y manejo de escenas, aumentando demasiado el tiempo de desarrollo.                 |
+|Usar una arquitectura monolítica             | Se descartó porque implicaría programar manualmente físicas, colisiones, renderizado y manejo de escenas, aumentando demasiado el tiempo de desarrollo.                   |
 
 ---
 
