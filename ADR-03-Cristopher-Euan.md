@@ -63,3 +63,6 @@ Si el proyecto crece considerablemente, algunas responsabilidades podrían conce
 ## Diagrama
 
 El sistema se organiza mediante capas donde cada nivel consume los servicios del nivel inferior.
+Diagrama creado en Mermaid.
+<img width="917" height="610" alt="image" src="https://github.com/user-attachments/assets/d1a88fe3-9527-4ec8-8994-04365e883df5" />
+
