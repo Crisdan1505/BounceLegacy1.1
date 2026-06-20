@@ -1,55 +1,71 @@
-# ADR-01: [Título corto de la decisión]
+# ADR-04: Incorporación de API REST en Bounce Legacy
 
-| Campo  | Valor |
-|--------|-------|
-| Autor  | [Nombre Apellido] |
-| Fecha  | DD/MM/AAAA |
-| Estado | `Propuesto` · `Aceptado` · `Rechazado` · `Reemplazado por ADR-NN` |
-
----
+| Campo  | Valor                       |
+| ------ | --------------------------- |
+| Autor  | Cristopher Maximiliano Euan |
+| Fecha  | 19/06/2026                  |
+| Estado | Aceptado                    |
 
 ## Contexto
 
-¿Qué estás construyendo, qué problema resuelve y para quién es? Describe también las condiciones o restricciones que influyeron en esta decisión — por ejemplo, el tiempo disponible, el equipo, las tecnologías que ya conoces o las que viste en clase.
+Bounce Legacy es un videojuego de plataformas 2D desarrollado en Unity y C#. Actualmente el proyecto cuenta con sistemas como movimiento del jugador, enemigos, Legacy Crystals, UI y GameManager.
 
----
+Conforme el proyecto crece, surge la necesidad de separar algunos datos del juego, como información de niveles, enemigos, cristales y progreso del jugador. Esto permite que el sistema sea más escalable y que los datos puedan consultarse o modificarse sin depender completamente del cliente en Unity.
 
 ## Decisión
 
-¿Qué decidiste? Sé específico: nombra la tecnología, el patrón o el estilo arquitectónico que elegiste.
+Se decidió incorporar una **API REST desarrollada con ASP.NET Core Web API** para exponer endpoints relacionados con los datos principales del videojuego.
 
-### ¿Por qué?
+La API incluirá endpoints para consultar enemigos, niveles, Legacy Crystals y progreso del jugador. Además, se configurará Swagger para documentar y probar los endpoints de forma profesional.
 
-Argumenta tu decisión. No basta con decir "es lo que vimos en clase" — explica qué característica concreta de lo que elegiste resuelve tu problema.
+## ¿Por qué REST?
 
-### Alternativas consideradas
+REST fue elegido porque es un estilo ampliamente utilizado para comunicar aplicaciones mediante HTTP. Permite organizar los recursos del sistema mediante endpoints claros, usando métodos como GET, POST, PUT y DELETE.
 
-*(Mínimo 3 filas)*
+Además, ASP.NET Core Web API facilita la creación de servicios REST y Swagger permite documentar automáticamente los endpoints, lo cual ayuda a validar el funcionamiento de la API.
 
-| Alternativa | Por qué la descarté |
-|-------------|---------------------|
-| ...         | ...                 |
-| ...         | ...                 |
-| ...         | ...                 |
+## Alternativas consideradas
 
----
+| Alternativa                      | Por qué la descarté                                                                            |
+| -------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Guardar todo localmente en Unity | No permite separar datos del juego ni exponer información mediante endpoints.                  |
+| Usar solo archivos JSON locales  | Es útil para guardado simple, pero no permite consultar datos desde una API externa.           |
+| GraphQL                          | Es flexible, pero resulta más complejo de implementar para el alcance actual del proyecto.     |
+| Firebase                         | Es potente para proyectos online, pero agrega dependencia externa innecesaria para esta etapa. |
 
 ## Consecuencias
 
-**✅ Lo que gano:**
+### ✅ Lo que gano
 
-Menciona al menos:
-- Una consecuencia **técnica** — qué se vuelve más fácil de construir, mantener o escalar en tu sistema
-- Una consecuencia sobre el **proceso o el equipo** — cómo afecta la forma en que vas a trabajar
+**Consecuencia técnica:**
+El proyecto puede separar datos del videojuego en una API externa, facilitando consultas sobre enemigos, niveles, cristales y progreso del jugador.
 
-**⚠️ Lo que sacrifico o asumo:**
+**Consecuencia sobre el proceso:**
+Swagger permite documentar y probar los endpoints de forma clara, lo que facilita la revisión del proyecto y demuestra una práctica usada en la industria.
 
-Menciona al menos:
-- Una **limitación técnica** — qué no podrás hacer fácilmente con esta decisión
-- Una **deuda o riesgo** — qué podrías tener que resolver más adelante si el proyecto crece
+### ⚠️ Lo que sacrifico o asumo
+
+**Limitación técnica:**
+La API agrega una capa adicional al proyecto, por lo que se debe mantener tanto el cliente en Unity como el backend en ASP.NET Core.
+
+**Deuda o riesgo:**
+Más adelante será necesario conectar Unity con la API mediante peticiones HTTP para que el videojuego consuma realmente los datos del backend.
 
 ## Diagrama
 
-Un boceto de cómo se estructura tu sistema (draw.io, Mermaid o a mano escaneado)
+```mermaid
+flowchart LR
 
-![Diagrama del sistema]( ./ruta/diagrama-nivel-1.png )
+PLAYER["Jugador"] --> UNITY["Bounce Legacy<br/>Unity Client"]
+
+UNITY --> API["ASP.NET Core Web API<br/>REST Endpoints"]
+
+API --> ENEMIES["Enemies Endpoint"]
+API --> LEVELS["Levels Endpoint"]
+API --> CRYSTALS["Legacy Crystals Endpoint"]
+API --> PROGRESS["Player Progress Endpoint"]
+
+API --> SWAGGER["Swagger UI<br/>Documentación y pruebas"]
+
+PROGRESS --> DATA["Datos / JSON / BD futura"]
+```
