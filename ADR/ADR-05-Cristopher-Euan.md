@@ -1,55 +1,78 @@
-# ADR-01: [Título corto de la decisión]
+# ADR-05: Integración de patrones GOF en Bounce Legacy
 
-| Campo  | Valor |
-|--------|-------|
-| Autor  | [Nombre Apellido] |
-| Fecha  | DD/MM/AAAA |
-| Estado | `Propuesto` · `Aceptado` · `Rechazado` · `Reemplazado por ADR-NN` |
-
----
+| Campo  | Valor                       |
+| ------ | --------------------------- |
+| Autor  | Cristopher Maximiliano Euan |
+| Fecha  | 26/06/2026                  |
+| Estado | Aceptado                    |
 
 ## Contexto
 
-¿Qué estás construyendo, qué problema resuelve y para quién es? Describe también las condiciones o restricciones que influyeron en esta decisión — por ejemplo, el tiempo disponible, el equipo, las tecnologías que ya conoces o las que viste en clase.
+Bounce Legacy es un videojuego de plataformas 2D desarrollado en Unity y C#. Actualmente el proyecto cuenta con movimiento del jugador, salto, cámara, enemigos, sistema de respawn, recolección de Legacy Crystals, contador en pantalla y un GameManager encargado de coordinar parte del estado global del juego.
 
----
+A medida que el proyecto crece, es necesario mejorar la organización interna del código para evitar dependencias innecesarias entre sistemas. Por ejemplo, el sistema de interfaz no debería depender directamente de la lógica interna de recolección, y el estado global del juego debe administrarse desde un punto central.
 
 ## Decisión
 
-¿Qué decidiste? Sé específico: nombra la tecnología, el patrón o el estilo arquitectónico que elegiste.
+Se decidió integrar dos patrones de diseño GOF de categorías distintas:
 
-### ¿Por qué?
+1. **Singleton** — patrón creacional.
+2. **Observer** — patrón de comportamiento.
 
-Argumenta tu decisión. No basta con decir "es lo que vimos en clase" — explica qué característica concreta de lo que elegiste resuelve tu problema.
+El patrón Singleton se aplica en `GameManager`, permitiendo tener una única instancia responsable de administrar el estado global del juego, como el contador de Legacy Crystals.
 
-### Alternativas consideradas
+El patrón Observer se aplica mediante el evento `OnCrystalChanged`, permitiendo que `CrystalUI` sea notificada cuando cambia la cantidad de cristales recolectados.
 
-*(Mínimo 3 filas)*
+## ¿Por qué?
 
-| Alternativa | Por qué la descarté |
-|-------------|---------------------|
-| ...         | ...                 |
-| ...         | ...                 |
-| ...         | ...                 |
+Se eligió Singleton porque el juego necesita un punto central de acceso para datos globales como los Legacy Crystals, el progreso del jugador y futuros estados del nivel. Esto evita crear múltiples objetos GameManager con información inconsistente.
 
----
+Se eligió Observer porque permite comunicar cambios entre sistemas sin acoplarlos directamente. En este caso, cuando el jugador recolecta un cristal, el GameManager actualiza el contador y notifica a la interfaz. La UI solo escucha el evento y actualiza el texto en pantalla.
+
+Esto mejora la separación de responsabilidades y facilita que en el futuro otros sistemas también reaccionen al cambio de cristales, como sonidos, animaciones, logros o guardado automático.
+
+## Alternativas consideradas
+
+| Alternativa                                         | Por qué la descarté                                                                                     |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| Variables públicas conectadas manualmente           | Aumentan el acoplamiento y obligan a que varios objetos dependan directamente entre sí.                 |
+| Buscar objetos con `FindObjectOfType`               | Puede ser menos eficiente y vuelve el código más difícil de mantener conforme crece el proyecto.        |
+| Actualizar la UI directamente desde `LegacyCrystal` | Mezcla responsabilidades, ya que el cristal no debería encargarse de modificar la interfaz.             |
+| Usar solo GameManager sin eventos                   | Funciona al inicio, pero acopla demasiado la UI al estado global y dificulta agregar nuevas reacciones. |
 
 ## Consecuencias
 
-**✅ Lo que gano:**
+### ✅ Lo que gano
 
-Menciona al menos:
-- Una consecuencia **técnica** — qué se vuelve más fácil de construir, mantener o escalar en tu sistema
-- Una consecuencia sobre el **proceso o el equipo** — cómo afecta la forma en que vas a trabajar
+**Consecuencia técnica:**
+El estado global del juego queda centralizado en `GameManager` mediante Singleton, mientras que la actualización de la interfaz se realiza mediante Observer. Esto reduce acoplamiento y mejora la organización.
 
-**⚠️ Lo que sacrifico o asumo:**
+**Consecuencia sobre el proceso:**
+El código es más fácil de explicar, probar y ampliar. Además, permite demostrar el uso real de patrones GOF dentro de un proyecto funcional.
 
-Menciona al menos:
-- Una **limitación técnica** — qué no podrás hacer fácilmente con esta decisión
-- Una **deuda o riesgo** — qué podrías tener que resolver más adelante si el proyecto crece
+### ⚠️ Lo que sacrifico o asumo
+
+**Limitación técnica:**
+El uso incorrecto de Singleton puede generar dependencia excesiva hacia `GameManager` si se le agregan demasiadas responsabilidades.
+
+**Deuda o riesgo:**
+Si el proyecto crece mucho, será necesario dividir responsabilidades del GameManager en servicios más específicos, como `ScoreManager`, `SaveManager` o `LevelManager`.
 
 ## Diagrama
 
-Un boceto de cómo se estructura tu sistema (draw.io, Mermaid o a mano escaneado)
+```mermaid
+flowchart TD
 
-![Diagrama del sistema]( ./ruta/diagrama-nivel-1.png )
+PLAYER["Jugador"]
+CRYSTAL["LegacyCrystal"]
+GM["GameManager<br/>Singleton"]
+EVENT["OnCrystalChanged<br/>Observer Event"]
+UI["CrystalUI<br/>Observer"]
+TEXT["Texto en pantalla<br/>Legacy Crystals"]
+
+PLAYER --> CRYSTAL
+CRYSTAL --> GM
+GM --> EVENT
+EVENT --> UI
+UI --> TEXT
+```
